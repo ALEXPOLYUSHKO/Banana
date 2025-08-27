@@ -1,0 +1,17 @@
+﻿@inherits LayoutComponentBase
+
+<CascadingValue Value=@browswerVieport Name="CurrentDOMSize">
+@Body
+</CascadingValue>
+
+<script>
+    window.registerViewportChangeCallback = (dotnetHelper) => {
+        window.addEventListener('load', () => {
+            dotnetHelper.invokeMethodAsync('OnResize', window.innerWidth, window.innerHeight);
+        });
+        window.addEventListener('resize', () => {
+                dotnetHelper.invokeMethodAsync('OnResize', window.innerWidth, window.innerHeight);
+        });
+    }
+</script>
+

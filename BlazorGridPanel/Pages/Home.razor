@@ -1,0 +1,90 @@
+﻿@page "/"
+@using Banana.Razor.Panels
+@using BlazorGridPanel.Components
+
+<PageTitle>Home</PageTitle>
+
+<GridPanel>
+    <RowDefinitions>
+        <RowDefinition Height="60px"></RowDefinition>
+    </RowDefinitions>
+
+    <PanelItem GridRow="1" GridColumn="1">
+        <div class="panel-root" style="padding:0.5rem 1rem;">
+            This is a single-row grid panel. Just to test layout if no <b>ColumnDefinitions</b> is declared
+        </div>
+    </PanelItem>
+</GridPanel>
+
+<GridPanel>
+    <ColumnDefinitions>
+        <ColumnDefinition Width="400px"></ColumnDefinition>
+        <ColumnDefinition Width="*"></ColumnDefinition>
+    </ColumnDefinitions>
+    <RowDefinitions>
+        <RowDefinition Height="250px"></RowDefinition>
+        <RowDefinition Height="auto"></RowDefinition>
+    </RowDefinitions>
+
+    <PanelItem GridRow="1" GridColumn="1">
+        <div id="panelOne" class="panel-root" style="background-color:hotpink;height:100%;width:100%;">
+            <div class="centered-in-grid">
+                <PanelInfo Title="Panel #1" ParentId="panelOne"/>
+            </div>
+        </div>
+    </PanelItem>
+
+    <PanelItem GridRow="2" GridColumn="1">
+        <div id="panelTwo" class="panel-root" style="background-color:yellowgreen;height:100%;width:100%;">
+            <div class="centered-in-grid">
+                <div style="padding:1rem;">
+                    <PanelInfo Title="Panel #2" ParentId="panelTwo" />
+                </div>
+            </div>
+        </div>
+    </PanelItem>
+
+    <PanelItem GridRow="1" GridColumn="2" GridRowSpan="2">
+        <div id="panelThree" class="panel-root" style="background-color:slateblue;height:100%;width:100%;">
+            <div class="centered-in-grid">
+                <PanelInfo Title="Panel #3 spanned over rows" ParentId="panelThree" />
+            </div>
+        </div>
+    </PanelItem>
+</GridPanel>
+
+@* this grid has fractional columns, but content one of the column is scrollable *@
+<GridPanel>
+    <ColumnDefinitions>
+        <ColumnDefinition Width="55*"></ColumnDefinition>
+        <ColumnDefinition Width="20*"></ColumnDefinition>
+        <ColumnDefinition Width="25*"></ColumnDefinition>
+    </ColumnDefinitions>
+    <RowDefinitions>
+        <RowDefinition Height="auto"></RowDefinition>
+        <RowDefinition Height="*"></RowDefinition>
+    </RowDefinitions>
+
+    <PanelItem GridRow="1" GridColumn="1" GridColumnSpan="2">
+        <div class="panel-root" style="background-color:coral;padding:0.5rem 1rem;">
+            Row spanned over 2 columns
+        </div>
+    </PanelItem>
+    <PanelItem GridRow="2" GridColumn="1">
+        <div class="panel-root" style="background-color:darkmagenta;color:white;padding:0.5rem 1rem;">
+            Left Panel
+        </div>
+    </PanelItem>
+    <PanelItem GridRow="2" GridColumn="2">
+        <div class="panel-root" style="background-color:seagreen;color:whitesmoke;padding:0.5rem 1rem;">
+            <b>Middle Panel</b> is scrollable<br />
+            Ensure to follow requirements when developing solutions can we take this offline, and window-licker baseline, but we need more paper, nor wheelhouse, and wiggle room. Through the lens of time vampire. Cloud native container based crisp ppt forcing function service as core &innovations as power makes our brand. Viral engagement deploy to production product market fit, for the closest elephant is the most dangerous, for turn the crank a set of certitudes based on deductions founded on false premise.
+        </div>
+    </PanelItem>
+    <PanelItem GridRow="2" GridColumn="3">
+        <div class="panel-root" style="background-color:darkolivegreen;color:whitesmoke;padding:0.5rem 1rem;">
+            Right Panel
+        </div>
+    </PanelItem>
+
+</GridPanel>

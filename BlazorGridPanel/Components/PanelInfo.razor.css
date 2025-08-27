@@ -1,0 +1,11 @@
+﻿.root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.root p {
+    font-size: 1.15rem;
+    margin:0;
+}

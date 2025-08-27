@@ -1,0 +1,13 @@
+﻿.panel-root {
+    width: auto;
+    height: auto;
+    margin:0;
+}
+
+.centered-in-grid {
+    display: flex;
+    justify-content: center; /* Horizontal alignment */
+    align-items: center; /* Vertical alignment */
+    height: 100%;
+    width: 100%;
+}
