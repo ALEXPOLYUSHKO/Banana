@@ -11,7 +11,7 @@
 
     <PanelItem GridRow="1" GridColumn="1">
         <div class="panel-root" style="padding:0.5rem 1rem;">
-            This is a single-row grid panel. Just to test layout if no <b>ColumnDefinitions</b> is declared
+            This is a single-row grid panel. Just to test layout if no <br /><b>ColumnDefinitions</b> is declared. This row is a fixed-height row.
         </div>
     </PanelItem>
 </GridPanel>
@@ -47,7 +47,7 @@
     <PanelItem GridRow="1" GridColumn="2" GridRowSpan="2">
         <div id="panelThree" class="panel-root" style="background-color:slateblue;height:100%;width:100%;">
             <div class="centered-in-grid">
-                <PanelInfo Title="Panel #3 spanned over rows" ParentId="panelThree" />
+                <PanelInfo Title="Panel #3 spanned over two rows" ParentId="panelThree" />
             </div>
         </div>
     </PanelItem>
@@ -67,7 +67,7 @@
 
     <PanelItem GridRow="1" GridColumn="1" GridColumnSpan="2">
         <div class="panel-root" style="background-color:coral;padding:0.5rem 1rem;">
-            Row spanned over 2 columns
+            Row spanned over 2 columns, This row is auto-sized row, which grows when content of the panel does not fit.
         </div>
     </PanelItem>
     <PanelItem GridRow="2" GridColumn="1">

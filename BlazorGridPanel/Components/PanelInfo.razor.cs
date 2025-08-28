@@ -6,7 +6,7 @@ namespace BlazorGridPanel.Components
     public partial class PanelInfo
     {
         [Inject]
-        public BananaJsInterop? BananaJsInterop { get; set; }
+        public IBananaJsInterop? BananaJsInterop { get; set; }
 
         [CascadingParameter(Name = "CurrentDOMSize")]
         public DOMSize CurrentDOMSize { get; set; }
@@ -54,7 +54,7 @@ namespace BlazorGridPanel.Components
         {
             if (rc != null)
             {
-                _panelInfo = $"{double.Round(rc.Width, 2)} x {double.Round(rc.Height, 2)}";
+                _panelInfo = $"{double.Round(rc.Width, 0)} x {double.Round(rc.Height, 0)}";
             }
             else
             {

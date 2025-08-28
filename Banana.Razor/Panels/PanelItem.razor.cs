@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Banana.Razor.Panels
 {
@@ -21,7 +20,7 @@ namespace Banana.Razor.Panels
         public int GridColumnSpan { get; set; } = 1;
 
         [Parameter]
-        public RenderFragment? ChildContent { get; set; }
+        public virtual RenderFragment? ChildContent { get; set; }
 
         public bool IsRendered { get; set; } = false;
 
@@ -48,12 +47,11 @@ namespace Banana.Razor.Panels
             base.OnAfterRender(firstRender);
         }
 
-        [SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize", Justification = "<Pending>")]
-        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>")]
         public override void Dispose()
         {
             Parent?.RemoveItem(this);
             base.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

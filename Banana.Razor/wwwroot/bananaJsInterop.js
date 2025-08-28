@@ -1,10 +1,6 @@
 // This is a JavaScript module that is loaded on demand. It can export any number of
 // functions, and may import other JavaScript modules if required.
 
-export function showPrompt(message) {
-  return prompt(message, 'Type anything here');
-}
-
 export function getElementRect(elementId)  {
     try {
         const element = document.getElementById(elementId);
@@ -25,15 +21,21 @@ export function getElementRect(elementId)  {
     }
 }
 
-export function registerViewportChangeCallback(dotnetObject) {
-    window.registerViewportChangeCallback = (dotNetObject) => {
-        window.addEventListener('load', () => {
-            dotNetObject.invokeMethodAsync('OnResize', window.innerWidth, window.innerHeight);
-        });
-        window.addEventListener('resize', () => {
-            dotNetObject.invokeMethodAsync('OnResize', window.innerWidth, window.innerHeight);
-        });
+let resizeCallback;
 
-        return true;
+export function addResizeListener(dotNetHelper) {
+    resizeCallback = () => {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        dotNetHelper.invokeMethodAsync('NotifyResize', width, height);
+    };
+    window.addEventListener('resize', resizeCallback);
+    window.addEventListener('load', resizeCallback);
+}
+
+export function removeResizeListener() {
+    if (resizeCallback) {
+        window.removeEventListener('resize', resizeCallback);
+        window.removeEventListener('load', resizeCallback);
     }
 }

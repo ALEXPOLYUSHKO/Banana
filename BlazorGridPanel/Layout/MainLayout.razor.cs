@@ -1,19 +1,16 @@
 ﻿using Banana.Razor.Interop;
+using Banana.Razor.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace BlazorGridPanel.Layout
 {
     public partial class MainLayout
     {
         [Inject]
-        public IJSRuntime? JSRuntime { get; set; }
-
-        private DotNetObjectReference<MainLayout>? _dotNetRef;
+        public required BrowserResizeMonitorService ResizeMonitorService { get; set; }
 
         private DOMSize browswerVieport;
 
-        [JSInvokable]
         public void OnResize(int width, int height)
         {
             var newSize = new DOMSize(width, height);
@@ -26,25 +23,16 @@ namespace BlazorGridPanel.Layout
             }
         }
 
-        protected override void OnInitialized()
+        protected async override Task OnInitializedAsync()
         {
-            _dotNetRef = DotNetObjectReference.Create(this);
-            base.OnInitialized();
+            ResizeMonitorService.OnResize += OnResize;
+            await ResizeMonitorService.StartMonitorAsync();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        public async ValueTask DisposeAsync()
         {
-            ArgumentNullException.ThrowIfNull(JSRuntime, nameof(JSRuntime));
-
-            if (firstRender)
-            {
-                await JSRuntime.InvokeVoidAsync("window.registerViewportChangeCallback", _dotNetRef);
-            }
-        }
-
-        public void Dispose()
-        {
-            _dotNetRef?.Dispose();
+            ResizeMonitorService.OnResize -= OnResize;
+            await ResizeMonitorService.StopMonitorAsync();
         }
     }
 }
