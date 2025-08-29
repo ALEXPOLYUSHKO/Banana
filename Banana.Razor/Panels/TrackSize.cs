@@ -5,7 +5,7 @@ namespace Banana.Razor.Panels
 {
     public record class TrackSize
     {
-        public TrackSize(string track)
+        public TrackSize(string track, StretchDirection stretchDir = StretchDirection.None)
         {
             var result = TryParse(track, out var value, out var unit);
 
@@ -15,6 +15,8 @@ namespace Banana.Razor.Panels
 
             // in case of auto or star result is false, but units still parsed correctly
             Unit = unit.UnitFromString();
+
+            StretchDirection = stretchDir;
         }
 
         public static TrackSize Default => new("*");
@@ -24,6 +26,8 @@ namespace Banana.Razor.Panels
         public bool IsFraction => Unit == TrackSizeUnit.Fraction;
 
         public bool IsAuto => Unit == TrackSizeUnit.Auto;
+
+        public StretchDirection StretchDirection { get; init; }
 
         public double Length;
 

@@ -73,8 +73,19 @@ namespace Banana.Razor.Panels
         }
 
         // returns either 'auto' or '100%'
+        // if the last track is fractional, and the length is 1.0, it must occupy the remaining
+        // browser space, it should not be 100% - it has to be a max-content
         private static string ComputeTrackSizesStretch(IEnumerable<TrackSize> trackSizes)
         {
+            // check last track to see if we have to limit vertical stretching to max-content
+            var last = trackSizes.LastOrDefault();
+
+            if (last != null && last.IsFraction && last.Length == 1.0 && 
+                last.StretchDirection.HasFlag(Enums.StretchDirection.Vertical))
+            {
+                return "max-content";
+            }
+
             var stretch = trackSizes.Any(x => x.IsFraction);
 
             return stretch ? "100%" : "auto";

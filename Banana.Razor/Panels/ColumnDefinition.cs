@@ -1,4 +1,5 @@
-﻿using Blazr.BaseComponents;
+﻿using Banana.Razor.Enums;
+using Blazr.BaseComponents;
 using Microsoft.AspNetCore.Components;
 
 namespace Banana.Razor.Panels
@@ -17,7 +18,7 @@ namespace Banana.Razor.Panels
         {
             ArgumentNullException.ThrowIfNull(Parent, nameof(Parent));
 
-            TrackSize = new TrackSize(Width);
+            TrackSize = new TrackSize(Width, StretchDirection.Horizontal);
 
             Parent.AddColumn(this);
         }

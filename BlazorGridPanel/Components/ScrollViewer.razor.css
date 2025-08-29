@@ -1,0 +1,5 @@
+﻿.scrollable-panel {
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: lightgray darkgray;
+}

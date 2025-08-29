@@ -20,7 +20,7 @@ namespace Banana.Razor.Panels
         public int GridColumnSpan { get; set; } = 1;
 
         [Parameter]
-        public virtual RenderFragment? ChildContent { get; set; }
+        public RenderFragment? ChildContent { get; set; }
 
         public bool IsRendered { get; set; } = false;
 

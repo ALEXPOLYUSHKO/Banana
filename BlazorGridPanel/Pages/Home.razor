@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using Banana.Razor.Panels
 @using BlazorGridPanel.Components
+@using Banana.Razor.Enums
 
 <PageTitle>Home</PageTitle>
 
@@ -76,9 +77,14 @@
         </div>
     </PanelItem>
     <PanelItem GridRow="2" GridColumn="2">
-        <div class="panel-root" style="background-color:seagreen;color:whitesmoke;padding:0.5rem 1rem;">
-            <b>Middle Panel</b> is scrollable<br />
-            Ensure to follow requirements when developing solutions can we take this offline, and window-licker baseline, but we need more paper, nor wheelhouse, and wiggle room. Through the lens of time vampire. Cloud native container based crisp ppt forcing function service as core &innovations as power makes our brand. Viral engagement deploy to production product market fit, for the closest elephant is the most dangerous, for turn the crank a set of certitudes based on deductions founded on false premise.
+        <div class="panel-root" style="background-color:seagreen;color:whitesmoke;">
+            <ScrollViewer Stretch="StretchDirection.Vertical" Id="ScrollViewer"
+                Visibility="ScrollBarVisibility.Visible">
+                <div style="padding:0.5rem 1rem;">
+                    <b>Middle Panel</b> is scrollable<br />
+                    Ensure to follow requirements when developing solutions can we take this offline, and window-licker baseline, but we need more paper, nor wheelhouse, and wiggle room. Through the lens of time vampire. Cloud native container based crisp ppt forcing function service as core &innovations as power makes our brand. Viral engagement deploy to production product market fit, for the closest elephant is the most dangerous, for turn the crank a set of certitudes based on deductions founded on false premise.
+                </div>
+            </ScrollViewer>
         </div>
     </PanelItem>
     <PanelItem GridRow="2" GridColumn="3">
