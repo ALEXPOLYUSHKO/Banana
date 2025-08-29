@@ -20,6 +20,12 @@ export function getElementRect(elementId)  {
         return null;
     }
 }
+export function getBrowserDimensions() {
+    return {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+};
 
 let resizeCallback;
 
@@ -30,12 +36,10 @@ export function addResizeListener(dotNetHelper) {
         dotNetHelper.invokeMethodAsync('NotifyResize', width, height);
     };
     window.addEventListener('resize', resizeCallback);
-    window.addEventListener('load', resizeCallback);
 }
 
 export function removeResizeListener() {
     if (resizeCallback) {
         window.removeEventListener('resize', resizeCallback);
-        window.removeEventListener('load', resizeCallback);
     }
 }

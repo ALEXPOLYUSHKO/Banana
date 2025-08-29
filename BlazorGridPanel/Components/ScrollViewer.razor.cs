@@ -38,11 +38,11 @@ namespace BlazorGridPanel.Components
                 _cachedBrowserViewport = CurrentDOMSize;
                 var rc = await GetBoundingRectAsync();
 #if DEBUG
-                Console.WriteLine($"Scroll viewer bounding rect after browswer resized: X={rc?.X}, Y={rc?.Y}, W={rc?.Width}, H={rc?.Height}");
+                Console.WriteLine($"ScrollViewer bounding rect after Parameters Set: X={rc?.X}, Y={rc?.Y}, W={rc?.Width}, H={rc?.Height}");
 #endif
-                if (rc != null && TryGetViewportUpdate(rc, out int newWidth, out int newHeight))
+                if (rc != null && TryGetViewportUpdate(rc, out int newwidth, out int newheight))
                 {
-                    scrollablePanelStyle = UpdateViewerViewport(newWidth, newHeight);
+                    scrollablePanelStyle = UpdateViewerViewport(newwidth, newheight);
                     StateHasChanged();
                 }
             }
@@ -53,6 +53,9 @@ namespace BlazorGridPanel.Components
             if (firstRender)
             {
                 var rc = await GetBoundingRectAsync();
+#if DEBUG
+                Console.WriteLine($"ScrollViewer bounding rect after First Render: X={rc?.X}, Y={rc?.Y}, W={rc?.Width}, H={rc?.Height}");
+#endif
                 if (rc != null && TryGetViewportUpdate(rc, out int newWidth, out int newHeight))
                 {
                     scrollablePanelStyle = UpdateViewerViewport(newWidth, newHeight);
@@ -89,6 +92,11 @@ namespace BlazorGridPanel.Components
                     isVerticalyChanged = true;
                     height = (int)Math.Round(rect.Height, 0) - overflowY;
                 }
+                if (overflowY < 0)
+                {
+                    isVerticalyChanged = true;
+                    height = _cachedBrowserViewport.Height - (int)Math.Round(rect.Y, 0);
+                }
             }
 
             width = (int)Math.Round(rect.Width, 0);
@@ -101,6 +109,11 @@ namespace BlazorGridPanel.Components
                 {
                     isHorizontalyChanged = true;
                     width = (int)Math.Round(rect.Width, 0) - overflowX;
+                }
+                if (overflowX < 0)
+                {
+                    isHorizontalyChanged = true;
+                    width = _cachedBrowserViewport.Width - (int)Math.Round(rect.X, 0);
                 }
             }
 

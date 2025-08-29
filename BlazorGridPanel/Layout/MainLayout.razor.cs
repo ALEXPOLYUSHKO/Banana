@@ -1,6 +1,7 @@
 ﻿using Banana.Razor.Interop;
 using Banana.Razor.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorGridPanel.Layout
 {
@@ -9,16 +10,36 @@ namespace BlazorGridPanel.Layout
         [Inject]
         public required BrowserResizeMonitorService ResizeMonitorService { get; set; }
 
+        //[Inject]
+        //public required IJSRuntime JSRuntime { get; set; }
+
         private DOMSize browswerVieport;
+
+//        [JSInvokable]
+//        public void OnLoad(int width, int height)
+//        {
+//            var bv = new DOMSize(width, height);
+//#if DEBUG
+//            Console.WriteLine($"Browswer Loaded: Width={width}, Height={height}");
+//#endif
+
+//            if (bv != browswerVieport)
+//            {
+//                browswerVieport = bv;
+//                StateHasChanged();
+//            }
+//        }
 
         public void OnResize(int width, int height)
         {
-            var newSize = new DOMSize(width, height);
+            var newsize = new DOMSize(width, height);
 
-            if (browswerVieport != newSize)
+            if (browswerVieport != newsize)
             {
-                Console.WriteLine($"Browswer resized: Width={width}, Height={height}");
-                browswerVieport = newSize;
+#if DEBUG
+                Console.WriteLine($"Browswer Resized: Width={width}, Height={height}");
+#endif
+                browswerVieport = newsize;
                 StateHasChanged();
             }
         }

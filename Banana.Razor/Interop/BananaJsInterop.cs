@@ -2,18 +2,17 @@ using Microsoft.JSInterop;
 
 namespace Banana.Razor.Interop;
 
-
 public sealed class BananaJsInterop(IJSRuntime jsRuntime) : IBananaJsInterop, IAsyncDisposable
 {
     private readonly Lazy<Task<IJSObjectReference>> moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
             "import", "./_content/Banana.Razor/bananaJsInterop.js").AsTask());
 
-    public event Action<int, int>? _resizeCallback;
+    private event Action<int, int>? ResizeCallback;
 
     [JSInvokable]
     public void NotifyResize(int width, int height)
     {
-        _resizeCallback?.Invoke(width, height);
+        ResizeCallback?.Invoke(width, height);
     }
 
     public async ValueTask<DOMRect?> GetElementRect(string id)
@@ -31,9 +30,17 @@ public sealed class BananaJsInterop(IJSRuntime jsRuntime) : IBananaJsInterop, IA
 
     public async ValueTask SubscribeBrowserResizeEvents(Action<int, int> callback)
     {
-        _resizeCallback = callback;
+        ResizeCallback = callback;
         var module = await moduleTask.Value;
         await module.InvokeVoidAsync("addResizeListener", DotNetObjectReference.Create(this));
+
+        // get initial browswer dimentions
+        var dimentions = await module.InvokeAsync<DOMSize>("getBrowserDimensions");
+
+        if (ResizeCallback != null)
+        {
+            ResizeCallback?.Invoke(dimentions.Width, dimentions.Height);
+        }
     }
 
     public async ValueTask UnsubscribeBrowserResizeEvents()
