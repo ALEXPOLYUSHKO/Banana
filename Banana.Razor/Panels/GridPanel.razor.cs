@@ -1,45 +1,54 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Banana.Razor.Extensions;
+using Microsoft.AspNetCore.Components;
 
 namespace Banana.Razor.Panels
 {
     public partial class GridPanel
     {
-        private string? ContainerStyle;
-
         private readonly List<PanelItem> Children = [];
 
-        private RenderFragment? _cachedPanel;
+        private RenderFragment? _cachedContent;
         private ColumnDefinitions? _columnDefinitions;
         private RowDefinitions? _rowDefinitions;
         private bool _allChildrenRendered = false;
+        private string? _containerStyle;
+
+        [Parameter]
+        public string ContainerStyle { get; set; } = "width:auto;height:auto";
 
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
         protected override bool ShouldRender()
         {
-            base.ShouldRender();
             return _allChildrenRendered;
+        }
+
+        public override async Task SetParametersAsync(ParameterView parameters)
+        {
+            parameters.ToOutput("GridPanel");
+
+            await base.SetParametersAsync(parameters);
         }
 
         protected override void OnAfterRender(bool firstRender)
         {
-#if false
+#if true
             var renderType = firstRender ? "First" : "Another";
             Console.WriteLine($"{renderType} OnAfterRender::Items in the panel: {Children.Count}");
 #endif
             if (firstRender)
             {
                 // on the first render we create container
-                ContainerStyle = GridPanelBuilder.GetContainerStyle(_rowDefinitions?.Rows ?? [], _columnDefinitions?.Columns ?? []);
+                _containerStyle = GridPanelBuilder.GetContainerStyle(_rowDefinitions?.Rows ?? [], _columnDefinitions?.Columns ?? [], ContainerStyle);
 
-                _cachedPanel = GridPanelBuilder.BuildGridPanels(Children);
+                _cachedContent = GridPanelBuilder.BuildGridPanels(Children);
 
-                ChildContent = _cachedPanel;
+                ChildContent = _cachedContent;
                 StateHasChanged();
             }
 
-            ChildContent = _cachedPanel;
+            ChildContent = _cachedContent;
 
             base.OnAfterRender(firstRender);
         }
@@ -57,13 +66,16 @@ namespace Banana.Razor.Panels
         internal void AddItem(PanelItem item)
         {
             Children.Add(item);
+#if true
+            Console.WriteLine($"PanelItem ID={item.Id} added. Children={Children.Count}");
+#endif
         }
 
         internal void RemoveItem(PanelItem panelItem)
         {
-            var result = Children?.Remove(panelItem);
-#if false
-            Console.WriteLine($"PanelItem removed: {result}");
+            var result = Children.Remove(panelItem);
+#if true
+            Console.WriteLine($"PanelItem ID={panelItem.Id} removed:{result}. Children={Children.Count}");
 #endif
         }
 

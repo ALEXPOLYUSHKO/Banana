@@ -1,0 +1,14 @@
+﻿<div class="tabcontrol-presenter-root" style="@GetPresenterStyle()">
+
+    @if (TabItem != null)
+    {
+        @if (Template != null)
+        {
+            @Template(TabItem)
+        }
+        else
+        {
+            @TabItem?.Header
+        }
+    }
+</div>

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Banana.Razor.Enums;
+using Banana.Razor.Extensions;
+using Banana.Razor.Interop;
+using Microsoft.AspNetCore.Components;
 
 namespace Banana.Razor.Panels
 {
@@ -22,8 +25,23 @@ namespace Banana.Razor.Panels
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
+        [Parameter]
+        public string? PanelStyle { get; set; }
+
         public bool IsRendered { get; set; } = false;
 
+        public string Id = Guid.NewGuid().ToString()[..4];
+
+        public DOMRect? BoundingRect { get; set; } = null;
+
+#if true
+        public override async Task SetParametersAsync(ParameterView parameters)
+        {
+            parameters.ToOutput("PanelItem");
+
+            await base.SetParametersAsync(parameters);
+        }
+#endif
         protected override void OnInitialized()
         {
             if (Parent == null)
@@ -36,22 +54,16 @@ namespace Banana.Razor.Panels
             Parent.AddItem(this);
         }
 
-        protected override void OnAfterRender(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            await base.OnAfterRenderAsync(firstRender);
+
             if (firstRender)
             {
                 IsRendered = true;
+
                 Parent?.UpdateState();
             }
-
-            base.OnAfterRender(firstRender);
-        }
-
-        public override void Dispose()
-        {
-            Parent?.RemoveItem(this);
-            base.Dispose();
-            GC.SuppressFinalize(this);
         }
     }
 }

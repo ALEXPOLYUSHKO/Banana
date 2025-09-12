@@ -2,18 +2,18 @@
 using Banana.Razor.Enums;
 using Banana.Razor.Extensions;
 using Banana.Razor.Interop;
+using Banana.Razor.Services;
 using Microsoft.AspNetCore.Components;
-using System.Drawing;
 
-namespace BlazorGridPanel.Components
+namespace Banana.Razor.Controls
 {
     public partial class ScrollViewer
     {
         [Inject]
         public IBananaJsInterop? BananaJsInterop { get; set; }
 
-        [CascadingParameter(Name = "CurrentDOMSize")]
-        public DOMSize CurrentDOMSize { get; set; }
+        [CascadingParameter]
+        public BrowserResizeNotification? BrowserViewport { get; set; }
 
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
@@ -22,7 +22,7 @@ namespace BlazorGridPanel.Components
         public StretchDirection Stretch { get; set; }
 
         [Parameter, EditorRequired]
-        public string Id { get; set; }
+        public string ViewportElementId { get; set; }
 
         [Parameter]
         public ScrollBarVisibility Visibility { get; set; }
@@ -31,19 +31,34 @@ namespace BlazorGridPanel.Components
         private readonly DOMSizeComparer _sizeComparer = new();
         private DOMSize _cachedBrowserViewport;
 
+#if false
+        public override async Task SetParametersAsync(ParameterView parameters)
+        {
+            parameters.ToOutput("ScrollViewer");
+
+            await base.SetParametersAsync(parameters);
+        }
+#endif
         protected async override Task OnParametersSetAsync()
         {
-            if (!_sizeComparer.Equals(_cachedBrowserViewport, CurrentDOMSize))
+            if (BrowserViewport != null && !_sizeComparer.Equals(_cachedBrowserViewport, BrowserViewport.Viewport))
             {
-                _cachedBrowserViewport = CurrentDOMSize;
-                var rc = await GetBoundingRectAsync();
-#if DEBUG
-                Console.WriteLine($"ScrollViewer bounding rect after Parameters Set: X={rc?.X}, Y={rc?.Y}, W={rc?.Width}, H={rc?.Height}");
-#endif
-                if (rc != null && TryGetViewportUpdate(rc, out int newwidth, out int newheight))
+                bool success = await TryGetBoundingRectAsync((rc) =>
                 {
-                    scrollablePanelStyle = UpdateViewerViewport(newwidth, newheight);
-                    StateHasChanged();
+#if DEBUG
+                    Console.WriteLine($"ScrollViewer bounding rect after Parameters Set: X={rc?.X}, Y={rc?.Y}, W={rc?.Width}, H={rc?.Height}");
+#endif
+                    if (rc != null && TryGetViewportUpdate(rc, BrowserViewport.Viewport, out int newwidth, out int newheight))
+                    {
+                        scrollablePanelStyle = UpdateViewerViewport(newwidth, newheight);
+                        StateHasChanged();
+                    }
+
+                }).ConfigureAwait(false);
+
+                if (success)
+                {
+                    _cachedBrowserViewport = BrowserViewport.Viewport;
                 }
             }
         }
@@ -56,7 +71,7 @@ namespace BlazorGridPanel.Components
 #if DEBUG
                 Console.WriteLine($"ScrollViewer bounding rect after First Render: X={rc?.X}, Y={rc?.Y}, W={rc?.Width}, H={rc?.Height}");
 #endif
-                if (rc != null && TryGetViewportUpdate(rc, out int newWidth, out int newHeight))
+                if (rc != null && TryGetViewportUpdate(rc, _cachedBrowserViewport, out int newWidth, out int newHeight))
                 {
                     scrollablePanelStyle = UpdateViewerViewport(newWidth, newHeight);
                     StateHasChanged();
@@ -74,10 +89,16 @@ namespace BlazorGridPanel.Components
                 style.Add("height", $"{newheight}px");
             }
 
+            if (Stretch.HasFlag(StretchDirection.Horizontal))
+            {
+                style.Add("overflow-x", Visibility.ToCss());
+                style.Add("width", $"{newwidth}px");
+            }
+
             return style.ToString();
         }
 
-        private bool TryGetViewportUpdate(DOMRect rect, out int width, out int height)
+        private bool TryGetViewportUpdate(DOMRect rect, DOMSize viewport, out int width, out int height)
         {
             bool isVerticalyChanged = false, isHorizontalyChanged = false;
 
@@ -86,7 +107,7 @@ namespace BlazorGridPanel.Components
             if (Stretch.HasFlag(StretchDirection.Vertical))
             {
                 int extentY = (int)Math.Round(rect.Y + rect.Height, 0);
-                int overflowY = extentY - _cachedBrowserViewport.Height;
+                int overflowY = extentY - viewport.Height;
                 if (overflowY > 0)
                 {
                     isVerticalyChanged = true;
@@ -95,7 +116,7 @@ namespace BlazorGridPanel.Components
                 if (overflowY < 0)
                 {
                     isVerticalyChanged = true;
-                    height = _cachedBrowserViewport.Height - (int)Math.Round(rect.Y, 0);
+                    height = viewport.Height - (int)Math.Round(rect.Y, 0);
                 }
             }
 
@@ -104,7 +125,7 @@ namespace BlazorGridPanel.Components
             if (Stretch.HasFlag(StretchDirection.Horizontal))
             {
                 int extentX = (int)Math.Round(rect.X + rect.Width, 0);
-                int overflowX = extentX - _cachedBrowserViewport.Width;
+                int overflowX = extentX - viewport.Width;
                 if (overflowX > 0)
                 {
                     isHorizontalyChanged = true;
@@ -113,7 +134,7 @@ namespace BlazorGridPanel.Components
                 if (overflowX < 0)
                 {
                     isHorizontalyChanged = true;
-                    width = _cachedBrowserViewport.Width - (int)Math.Round(rect.X, 0);
+                    width = viewport.Width - (int)Math.Round(rect.X, 0);
                 }
             }
 
@@ -123,7 +144,30 @@ namespace BlazorGridPanel.Components
         private async Task<DOMRect?> GetBoundingRectAsync()
         {
             ArgumentNullException.ThrowIfNull(BananaJsInterop, nameof(BananaJsInterop));
-            return await BananaJsInterop.GetElementRect(Id);
+            return await BananaJsInterop.GetElementRect(ViewportElementId);
+        }
+
+        private async Task<bool> TryGetBoundingRectAsync(Action<DOMRect> callback)
+        {
+            ArgumentNullException.ThrowIfNull(BananaJsInterop, nameof(BananaJsInterop));
+
+            if (!string.IsNullOrEmpty(ViewportElementId))
+            {
+                try
+                {
+                    var rect = await BananaJsInterop.GetElementRect(ViewportElementId);
+                    if (rect != null)
+                    {
+                        callback.Invoke(rect);
+                        return true;
+                    }
+                }
+                catch
+                {
+                    // swallowing is intended
+                }
+            }
+            return false;
         }
     }
 }

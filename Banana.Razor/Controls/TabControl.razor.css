@@ -1,0 +1,12 @@
+﻿.control-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.control-strip-root {
+    flex: none;
+}
+
+.control-content-root {
+}

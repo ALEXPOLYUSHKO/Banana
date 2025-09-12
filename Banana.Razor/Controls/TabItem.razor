@@ -1,0 +1,17 @@
+﻿@using Banana.Razor.Enums
+
+@if (Parent?.ActiveItem == this)
+{
+    @if (CanContentScroll)
+    {
+        <ScrollViewer Stretch="@Stretch" ViewportElementId="@Parent?.ViewportId">
+            @ChildContent
+        </ScrollViewer>
+    }
+    else
+    {
+        <div>
+	        @ChildContent
+        </div>
+    }
+}

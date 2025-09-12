@@ -1,0 +1,213 @@
+﻿@page "/"
+@using Banana.Razor.Enums
+
+<PageTitle>Home</PageTitle>
+
+<GridPanel ContainerStyle="height:100%">
+    <ColumnDefinitions>
+        <ColumnDefinition Width="0.25*"></ColumnDefinition>
+        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+        <ColumnDefinition Width="0.25*"></ColumnDefinition>
+    </ColumnDefinitions>
+    <RowDefinitions>
+        <RowDefinition Height="120px"></RowDefinition>
+        <RowDefinition Height="*"></RowDefinition>
+        <RowDefinition Height="auto"></RowDefinition>
+    </RowDefinitions>
+
+    @* PANEL #1 *@
+
+    <PanelItem GridRow="1" GridColumn="1" GridColumnSpan="3"
+               PanelStyle="background-color:coral" @ref=_referencePanelOne>
+
+        <div class="panel-root panel-decoration" style="height:100%;">
+            <div style="padding:0.5rem 1rem;align-self:center;text-align:center;width:100%">
+                <h2>Fixed Size Header</h2>
+            </div>
+            <PanelItemSizeBadge ParentReference=_referencePanelOne>
+                <div style="position:relative;">
+                    <Badge />
+                </div>
+            </PanelItemSizeBadge>
+        </div>
+    </PanelItem>
+
+    @* PANEL #2 *@
+
+    <PanelItem GridRow="2" GridColumn="1"
+               PanelStyle="background-color:cornflowerblue" @ref=_referencePanelTwo>
+        <div class="panel-root panel-decoration">
+            <ScrollViewer Stretch="StretchDirection.Vertical" ViewportElementId="@_referencePanelTwo?.Id">
+            <div style="padding:0.5rem">
+                <ul>
+                    <li>Optimus Prime</li>
+                    <li>Megatron</li>
+                    <li>Bumblebee</li>
+                    <li>Starscream</li>
+                    <li>Soundwave</li>
+                    <li>Ironhide</li>
+                    <li>Jazz</li>
+                    <li>Ratchet</li>
+                    <li>Grimlock</li>
+                    <li>Shockwave</li>
+                    <li>Ultra Magnus</li>
+                    <li>Skywarp</li>
+                    <li>Thundercracker</li>
+                    <li>Arcee</li>
+                    <li>Hot Rod</li>
+                    <li>Rodimus Prime</li>
+                    <li>Galvatron</li>
+                    <li>Sideswipe</li>
+                    <li>Sunstreaker</li>
+                    <li>Prowl</li>
+                    <li>Wheeljack</li>
+                    <li>Blaster</li>
+                    <li>Kup</li>
+                    <li>Springer</li>
+                    <li>Perceptor</li>
+                    <li>Blurr</li>
+                    <li>Hound</li>
+                    <li>Trailbreaker</li>
+                    <li>Mirage</li>
+                    <li>Jetfire</li>
+                    <li>Devastator</li>
+                    <li>Mixmaster</li>
+                    <li>Hook</li>
+                    <li>Long Haul</li>
+                    <li>Scrapper</li>
+                    <li>Bonecrusher</li>
+                    <li>Scavenger</li>
+                    <li>Ravage</li>
+                    <li>Laserbeak</li>
+                    <li>Rumble</li>
+                    <li>Frenzy</li>
+                    <li>Soundblaster</li>
+                    <li>Thunderclash</li>
+                    <li>Reflector</li>
+                    <li>Cliffjumper</li>
+                    <li>Smokescreen</li>
+                    <li>Wheelie</li>
+                    <li>Kup</li>
+                    <li>Ultra Magnus</li>
+                    <li>Alpha Trion</li>
+                    <li>Sentinel Prime</li>
+                    <li>Perceptor</li>
+                    <li>Blaster</li>
+                    <li>Shockblast</li>
+                    <li>Drift</li>
+                    <li>Lockdown</li>
+                    <li>Crosshairs</li>
+                    <li>Hurk</li>
+                    <li>Sideswipe (movie)</li>
+                    <li>Ironhide (movie)</li>
+                    <li>Sentinel Prime (movie)</li>
+                    <li>Shockwave (movie)</li>
+                    <li>Lockdown (movie)</li>
+                    <li>Barricade</li>
+                    <li>Megatron (movie)</li>
+                    <li>Scorponok</li>
+                    <li>Blackout</li>
+                    <li>Scorponok (Transformers)</li>
+                    <li>Blitzwing</li>
+                    <li>Skylynx</li>
+                    <li>Omega Supreme</li>
+                    <li>Galvatron (movie)</li>
+                    <li>Waspinator</li>
+                    <li>Tarantulas</li>
+                    <li>Blackarachnia</li>
+                    <li>Rattrap</li>
+                    <li>Dinobot</li>
+                    <li>Optimus Primal</li>
+                    <li>Cheetor</li>
+                    <li>Tigatron</li>
+                    <li>Airazor</li>
+                    <li>Silverbolt</li>
+                    <li>Megatron (Beast Wars)</li>
+                    <li>Inferno</li>
+                    <li>Grimlock (Beast Wars)</li>
+                    <li>Predaking</li>
+                    <li>Divebomb</li>
+                    <li>Rampage</li>
+                    <li>Tantrum</li>
+                    <li>Headstrong</li>
+                    <li>Razorclaw</li>
+                    <li>Menasor</li>
+                    <li>Skids</li>
+                    <li>Slag</li>
+                    <li>Sludge</li>
+                    <li>Swoop</li>
+                    <li>Snarl</li>
+                    <li>Galvatron (G1)</li>
+                    <li>Ultra Magnus (G1)</li>
+                    <li>Scourge</li>
+                    <li>Thunderwing</li>
+                    <li>Overlord</li>
+                    <li>Broadside</li>
+                    <li>Skyfire</li>
+                    <li>Hot Spot</li>
+                    <li>Computron</li>
+                    <li>Sky Lynx</li>
+                    <li>Omega Supreme (G1)</li>
+                    <li>Jetfire (G1)</li>
+                    <li>Hot Rod (G1)</li>
+                    <li>Chromia</li>
+                    <li>Elita-1</li>
+                    <li>Rodimus (various)</li>
+                    <li>Vector Prime</li>
+                    <li>Dr. Arkeville</li>
+                    <li>Alpha Bravo</li>
+                    <li>Moonracer</li>
+                    <li>Arcee (various)</li>
+                    <li>Kup (various)</li>
+                    <li>Jazz (various)</li>
+                    <li>Roadbuster</li>
+                    <li>Topspin</li>
+                    <li>Whirl</li>
+                    <li>Huffer</li>
+                    <li>Skids (various)</li>
+                    <li>Smokescreen (various)</li>
+                    <li>Soundwave (various)</li>
+                    <li>Leadfoot</li>
+                    <li>Springer (various)</li>
+                    <li>Perceptor (various)</li>
+                    <li>Ultra Magnus (various)</li>
+                    <li>--- (and many more across G1, Beast Wars, Armada, Energon, Cybertron, Animated, Prime, IDW, movies, and other continuities)</li>
+                </ul>
+
+            </div>
+            </ScrollViewer>
+        </div>
+    </PanelItem>
+
+    @* PANEL #3 *@
+    <PanelItem GridRow="2" GridColumn="2" PanelStyle="background-color:antiquewhite;">
+        <div class="panel-root panel-decoration">
+            <div style="padding:0.5rem 1rem;">
+                Panel #3
+            </div>
+        </div>
+    </PanelItem>
+
+    @* PANEL #4 *@
+    <PanelItem GridRow="2" GridColumn="3" PanelStyle="background-color:indianred;">
+        <div class="panel-root panel-decoration">
+            <div style="padding:0.5rem 1rem;">
+                Panel #4
+            </div>
+        </div>
+    </PanelItem>
+
+    @* PANEL #5 *@
+    <PanelItem GridRow="3" GridColumn="1" GridColumnSpan="3" PanelStyle="background-color:mediumseagreen">
+        <div class="panel-root panel-decoration">
+            <div style="padding:0.5rem 1rem;">
+                <h2>Panel #5. Auto-Sized Footer</h2>
+            </div>
+        </div>
+    </PanelItem>
+</GridPanel>
+
+@code{
+    private PanelItem? _referencePanelOne;
+    private PanelItem? _referencePanelTwo;
+}

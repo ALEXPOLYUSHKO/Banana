@@ -1,0 +1,27 @@
+﻿<div role="group" class="tabcontrol-strip-root" style="background-color:#2E4D5D;">
+    @if (Parent != null)
+    {
+        <div role="group">
+            @foreach (TabItem tabItem in Parent.Items)
+            {
+                if (tabItem.IsEnabled)
+                {
+                    <button type="button"
+                        @onclick=@(() => Parent?.ActivateItem(tabItem))>
+                        <CascadingValue Value="tabItem">
+                            <TabItemPresenter Template=@Parent.ItemTemplate></TabItemPresenter>
+                        </CascadingValue>
+                    </button>
+                }
+                else
+                {
+                    <button type="button" disabled style="cursor:default">
+                         <CascadingValue Value="tabItem">
+                            <TabItemPresenter Template=@Parent.ItemTemplate></TabItemPresenter>
+                        </CascadingValue>
+                    </button>
+                }
+            }
+        </div>
+    }
+</div>

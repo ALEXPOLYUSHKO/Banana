@@ -1,4 +1,5 @@
 ﻿using Banana.Razor.Interop;
+using Banana.Razor.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorGridPanel.Components
@@ -8,8 +9,8 @@ namespace BlazorGridPanel.Components
         [Inject]
         public IBananaJsInterop? BananaJsInterop { get; set; }
 
-        [CascadingParameter(Name = "CurrentDOMSize")]
-        public DOMSize CurrentDOMSize { get; set; }
+        [CascadingParameter]
+        public BrowserResizeNotification? BrowserViewport { get; set; }
 
         [Parameter]
         public string? Title { get; set; }
@@ -33,9 +34,9 @@ namespace BlazorGridPanel.Components
 
         protected async override Task OnParametersSetAsync()
         {
-            if (!_sizeComparer.Equals(_cachedBrowserViewport, CurrentDOMSize))
+            if (BrowserViewport != null && !_sizeComparer.Equals(_cachedBrowserViewport, BrowserViewport.Viewport))
             {
-                _cachedBrowserViewport = CurrentDOMSize;
+                _cachedBrowserViewport = BrowserViewport.Viewport;
                 var parentRect = await GetParentRectAsync();
                 UpdateInfo(parentRect);
                 StateHasChanged();
@@ -58,7 +59,7 @@ namespace BlazorGridPanel.Components
             }
             else
             {
-                _panelInfo = "Could not determine panel rect";
+                _panelInfo = "Could not determine panel's bounding rectangle";
             }
         }
     }

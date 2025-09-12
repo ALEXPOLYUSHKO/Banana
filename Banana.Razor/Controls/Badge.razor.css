@@ -1,0 +1,10 @@
+﻿.badge {
+    position: absolute;
+    bottom: .7rem;
+    right: .7rem;
+    z-index: 1000;
+    background-color: white;
+    padding: 1px 4px;
+    white-space: nowrap;
+    font-size:.9rem;
+}

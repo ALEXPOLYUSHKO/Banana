@@ -9,6 +9,9 @@
         }
 
         public int Width { get; init; }
+
         public int Height { get; init; }
+
+        public static DOMSize Empty => new(0, 0);
     }
 }

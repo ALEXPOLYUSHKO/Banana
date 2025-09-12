@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banana.Tests", "Banana.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorGridPanel", "BlazorGridPanel\BlazorGridPanel.csproj", "{225C3DD6-651C-92C5-63BB-8BDB860B1A89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorTabControl", "BlazorTabControl\BlazorTabControl.csproj", "{3823933F-1892-4EB2-AA77-2782B0E8C883}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorGridPanelSampleTwo", "BlazorGridPanelSampleTwo\BlazorGridPanelSampleTwo.csproj", "{4889AE9C-BA2F-4DC6-832B-13596B837448}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{225C3DD6-651C-92C5-63BB-8BDB860B1A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{225C3DD6-651C-92C5-63BB-8BDB860B1A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{225C3DD6-651C-92C5-63BB-8BDB860B1A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3823933F-1892-4EB2-AA77-2782B0E8C883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3823933F-1892-4EB2-AA77-2782B0E8C883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3823933F-1892-4EB2-AA77-2782B0E8C883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3823933F-1892-4EB2-AA77-2782B0E8C883}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4889AE9C-BA2F-4DC6-832B-13596B837448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4889AE9C-BA2F-4DC6-832B-13596B837448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4889AE9C-BA2F-4DC6-832B-13596B837448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4889AE9C-BA2F-4DC6-832B-13596B837448}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

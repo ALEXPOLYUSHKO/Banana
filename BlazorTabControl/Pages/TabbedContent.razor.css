@@ -1,0 +1,36 @@
+﻿.tabitem-header {
+    margin-top: .375rem;
+    margin-right: .1875rem;
+    margin-left: .1875rem;
+    border-top-left-radius: .1875rem;
+    border-top-right-radius: .1875rem;
+    font-family: "proxima-nova", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+    font-size: 1.1rem;
+    line-height: 28px;
+    padding: .375rem 1rem;
+}
+
+.tabitem-active {
+    border-top: .1875rem solid #FFB347;
+    background-color: #F5F7F9;
+    color: #1C2B33;
+}
+
+.tabitem-inactive {
+    border-top: .1875rem solid transparent;
+    background-color: #3D687F;
+    color: white;
+}
+
+
+.content {
+    line-height: 1.5;
+    font-family: Lato,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    box-sizing: border-box;
+    background: #fff;
+    padding: 20px 40px;
+    color: #2c3e50;
+    font-size: 16px;
+    margin: 20px 0;
+    display: block;
+}

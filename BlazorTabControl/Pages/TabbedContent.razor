@@ -1,0 +1,83 @@
+﻿
+<TabControl @bind-SelectedTabIndex=CurrentTabIndex>
+    <ItemTemplate>
+        <div style="padding:0;background-color:transparent;color:inherit">
+            @if (@context.IsSelected)
+            {
+                <div class="tabitem-header tabitem-active">
+                    @context.Header
+                </div>
+            }
+            else
+            {
+                <div class="tabitem-header tabitem-inactive">
+                    @context.Header
+                </div>
+            }
+        </div>
+    </ItemTemplate>
+
+    <ChildContent>
+        <TabItem Header="Home" Stretch="StretchDirection.None">
+            <div class="centered-in-grid">
+                <h2>This is home tab content</h2>
+            </div>
+        </TabItem>
+@*         <TabItem Header="Lorem Ipsum" IsDefault=true Stretch="StretchDirection.Vertical">
+            <div class="content">
+                <ul>
+                    <li>Lorem ipsum Sed at ex vel dui pharetra placerat eu ac nunc</li>
+                    <li>Nam fermentum ex nec purus sodales, quis interdum neque pretium</li>
+                    <li>Nullam fringilla sem vel consectetur efficitur</li>
+                    <li>Pellentesque tristique tortor eu sem aliquam congue</li>
+                    <li>Donec id diam non dui commodo luctus tincidunt at turpis</li>
+                    <li>Ut eget eros ac metus elementum sagittis</li>
+                    <li>Donec luctus elit quis leo tristique, at efficitur velit pellentesque</li>
+                    <li>Aenean dignissim turpis vel augue sagittis, id tincidunt arcu sagittis</li>
+                    <li>Nunc condimentum ligula et nunc varius sodales</li>
+                    <li>Fusce sagittis nunc vel viverra lobortis</li>
+                    <li>Curabitur laoreet tellus vitae velit luctus, eu facilisis sapien imperdiet</li>
+                    <li>Nam at dolor a enim eleifend placerat quis convallis risus</li>
+                    <li>Donec in leo feugiat, ultrices felis id, volutpat nulla</li>
+                    <li>Aliquam tristique dui ac iaculis ullamcorper</li>
+                    <li>Maecenas dictum quam et est tincidunt ornare</li>
+                    <li>Nulla luctus nulla quis ligula volutpat, eu tincidunt felis pharetra</li>
+                    <li>Cras ac nunc in dolor sollicitudin eleifend et vel purus</li>
+                    <li>Aenean pellentesque sem id lacus malesuada semper</li>
+                    <li>Donec convallis metus in magna aliquam, in pellentesque ante efficitur</li>
+                    <li>Quisque ac enim a lacus elementum convallis</li>
+                    <li>Proin sed urna id neque tempor blandit at in turpis</li>
+                    <li>Duis vel ex lacinia, dictum lectus non, feugiat tortor</li>
+                    <li>Duis mattis velit id congue egestas</li>
+                    <li>Aliquam ut neque pharetra massa faucibus scelerisque</li>
+                    <li>Pellentesque eget nisl efficitur, vulputate sapien laoreet, dictum erat</li>
+                    <li>Nam ut massa quis felis ultrices dictum</li>
+                    <li>Nam non enim efficitur, scelerisque orci sit amet, dapibus diam</li>
+                    <li>Donec nec ante blandit, ultrices magna nec, sollicitudin purus</li>
+                    <li>Aliquam a elit non nulla malesuada porta</li>
+                    <li>Suspendisse quis sapien id orci tempor efficitur</li>
+                    <li>Sed quis eros bibendum, porta purus sed, luctus ante</li>
+                    <li>Aliquam in odio et ex efficitur sodales sit amet eu orci</li>
+                    <li>Nunc gravida metus in eros placerat porttitor</li>
+                    <li>Aenean ut dolor tincidunt, commodo neque ut, dapibus ipsum</li>
+                    <li>Nullam tempus sem in ex finibus, in imperdiet odio eleifend</li>
+                    <li>Proin posuere elit ac ante consectetur ornare</li>
+                    <li>In et leo dapibus, vehicula diam a, maximus mi</li>
+                    <li>Nunc et mi in est cursus molestie ac at erat</li>
+                    <li>Phasellus gravida est sed urna consequat, mollis tincidunt odio egestas</li>
+                    <li>Pellentesque dictum felis ac lorem mollis, quis auctor est condimentum</li>
+                </ul>
+            </div>
+        </TabItem>
+        <TabItem Header="Coding" IsEnabled=false Stretch="StretchDirection.None">
+            <div class="centered-in-grid">
+                <h2>The Koding Tab</h2>
+            </div>
+        </TabItem>
+        <TabItem Header="Contact" Stretch="StretchDirection.None">
+            <div class="centered-in-grid">
+                <h2>The Contact Tab</h2>
+            </div>
+        </TabItem> *@
+    </ChildContent>
+</TabControl>

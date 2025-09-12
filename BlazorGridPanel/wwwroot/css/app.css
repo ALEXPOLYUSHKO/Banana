@@ -1,12 +1,15 @@
 body {
     margin: 0;
     height: 100vh;
-    overflow: auto;
 }
 
 #app {
     height: 100%;
     width: 100%;
+    overflow: hidden;
+/*    
+    overflow: auto;
+    scrollbar-gutter: stable;*/
 }
 
 .valid.modified:not([type=checkbox]) {

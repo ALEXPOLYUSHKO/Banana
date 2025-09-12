@@ -1,4 +1,5 @@
 ﻿using Banana.Core.Helpers;
+using Banana.Razor.Enums;
 using Banana.Razor.Extensions;
 using Microsoft.AspNetCore.Components;
 
@@ -10,19 +11,20 @@ namespace Banana.Razor.Panels
 
         /* CONTAINER */
 
-        public static string BuildGridContainer(IEnumerable<TrackSize> rows, IEnumerable<TrackSize> columns)
+        public static string BuildGridContainer(IEnumerable<TrackSize> rows, IEnumerable<TrackSize> columns, string? baseStyle = null)
         {
-            return GetContainerStyle(rows, columns);
+            return GetContainerStyle(rows, columns, baseStyle);
         }
 
-        public static string GetContainerStyle(IEnumerable<TrackSize> rows, IEnumerable<TrackSize> columns)
+        public static string GetContainerStyle(IEnumerable<TrackSize> rows, IEnumerable<TrackSize> columns, string? baseStyle = null)
         {
-            return new CssStyleBuilder()
+            return new CssStyleBuilder(baseStyle)
                 .Add("display", "grid")
                 .Add("grid-template-rows", GetTemplatedTrackSizes(rows))
                 .Add("grid-template-columns", GetTemplatedTrackSizes(columns))
-                .Add("height", ComputeTrackSizesStretch(rows))
-                .Add("width", ComputeTrackSizesStretch(columns)).ToString();
+                .Add("place-items", "stretch stretch") // stretching content to take all available space
+                .Add("place-content", "stretch stretch") // arranging the content spread across container
+                .ToString();
         }
 
         /* PANELS */
@@ -32,10 +34,10 @@ namespace Banana.Razor.Panels
             foreach (var item in items)
             {
                 builder.OpenElement(0, DIV);
-
+                builder.AddAttribute(1, "id", item.Id);
                 // set style for the item
-                builder.AddAttribute(1, "style", GetPanelItemStyle(item));
-                builder.AddContent(2, item.ChildContent);
+                builder.AddAttribute(2, "style", GetPanelItemStyle(item));
+                builder.AddContent(3, item.ChildContent);
                 builder.CloseElement();
             }
         };
@@ -47,13 +49,14 @@ namespace Banana.Razor.Panels
             int columnStart = item.GridColumn;
             int columnEnd = item.GridColumn + item.GridColumnSpan;
 
-            var style = new CssStyleBuilder()
+            var style = new CssStyleBuilder(item.PanelStyle)
                 .Add("grid-row-start", rowStart.ToString())
                 .Add("grid-row-end", rowEnd.ToString())
                 .Add("grid-column-start", columnStart.ToString())
                 .Add("grid-column-end", columnEnd.ToString());
 
-            // stretching content to take all available space
+            // by default css stretches the whole height and width of the panel
+
             style.Add("justify-self", "stretch");
             style.Add("align-self", "stretch");
 
